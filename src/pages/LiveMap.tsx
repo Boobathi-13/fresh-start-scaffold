@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { CustomButton } from "@/components/ui/custom-button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, MapPin, Phone, MessageCircle, Navigation, Clock, User } from "lucide-react";
+import { ArrowLeft, Phone, MessageCircle, Navigation, Clock } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import Map from "@/components/Map";
 
 const LiveMap = () => {
   const navigate = useNavigate();
@@ -82,47 +83,12 @@ const LiveMap = () => {
       </div>
 
       <div className="p-6 space-y-6">
-        {/* Map Container */}
-        <Card className="shadow-[var(--shadow-medium)] rounded-2xl border-0 overflow-hidden">
-          <div className="h-80 bg-gradient-to-br from-blue-100 to-green-100 relative flex items-center justify-center">
-            {/* Simulated Map */}
-            <div className="absolute inset-0 opacity-50 bg-gray-100"></div>
-            
-            {/* User Location */}
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-              <div className="p-3 bg-blue-500 rounded-full shadow-lg">
-                <MapPin className="h-6 w-6 text-white" />
-              </div>
-              <p className="text-xs text-center mt-1 font-medium">You</p>
-            </div>
-            
-            {/* Supporter Location */}
-            <div 
-              className="absolute transform -translate-x-1/2 -translate-y-1/2 transition-all duration-3000"
-              style={{
-                top: `${45 + Math.sin(Date.now() / 1000) * 5}%`,
-                left: `${55 + Math.cos(Date.now() / 1000) * 5}%`
-              }}
-            >
-              <div className="p-3 bg-app-orange rounded-full shadow-lg animate-pulse">
-                <User className="h-6 w-6 text-white" />
-              </div>
-              <p className="text-xs text-center mt-1 font-medium">Supporter</p>
-            </div>
-
-            {/* Route Line */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none">
-              <path
-                d="M 50% 50% Q 60% 45% 65% 50%"
-                stroke="#f8b323"
-                strokeWidth="3"
-                strokeDasharray="5,5"
-                fill="none"
-                className="animate-pulse"
-              />
-            </svg>
-          </div>
-        </Card>
+        {/* Interactive Map */}
+        <Map 
+          userLocation={userLocation}
+          supporterLocation={supporterLocation}
+          className="w-full"
+        />
 
         {/* Status Card */}
         <Card className="shadow-[var(--shadow-medium)] rounded-2xl border-0">
